@@ -1,0 +1,34 @@
+'use strict';
+module.exports = (sequelize, DataTypes) => {
+  const employee = sequelize.define('Employee', {
+    name: DataTypes.STRING,
+    alias: DataTypes.STRING,
+    phoneNo: DataTypes.STRING,
+    nrcNo: DataTypes.STRING,
+    personalEmail: DataTypes.STRING,
+    officialEmail: DataTypes.STRING,
+    township: DataTypes.STRING,
+    city: DataTypes.STRING,
+    address: DataTypes.STRING,
+    postalCode: DataTypes.STRING,
+    dob: DataTypes.DATE,
+    gender: DataTypes.ENUM('male', 'female'),
+    positon: DataTypes.STRING,
+    basicSalary: DataTypes.DECIMAL(20,2),
+    nationality: DataTypes.STRING,
+    race: DataTypes.STRING,
+    maritalStatus: DataTypes.ENUM('single', 'marriaged'),
+    employeeStatus: DataTypes.ENUM('active', 'inactive'),
+    photo: DataTypes.TEXT,
+    userName: DataTypes.STRING,
+    password: DataTypes.STRING
+  }, {});
+  employee.associate = (models) => {
+    // associations can be defined here
+    employee.hasMany(models.Attendance, {
+      foreignKey: 'employeeId',
+      as: 'attendances'
+    })
+  };
+  return employee;
+};

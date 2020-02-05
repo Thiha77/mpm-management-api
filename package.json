@@ -1,0 +1,22 @@
+{
+  "name": "attendance_api",
+  "version": "1.0.0",
+  "description": "REST API FOR MPM ATTENDANCE.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "author": "MPM",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "mariadb": "^2.1.5",
+    "mysql": "^2.17.1",
+    "sequelize": "^5.21.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
+}
