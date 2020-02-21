@@ -1,7 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const rolePermission = sequelize.define('RolePermission', {
-    rolea: DataTypes.STRING,
     roleId: DataTypes.INTEGER,
     permissionId: DataTypes.INTEGER
   }, {});

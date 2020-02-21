@@ -4,6 +4,9 @@ const sequelize = require('../db');
 
 const employees = require('./employee');
 const attendances = require('./attendance');
+const roles = require('./role');
+const permissions = require('./permission');
+const rolepermissions = require('./rolepermission');
 // con.connect((err) => {
 //     if(err) throw err
 // })
@@ -42,6 +45,9 @@ router.post('/testpost', (req, res) => {
 
 router.use('/employees', employees);
 router.use('/attendances', attendances);
+router.use('/roles', roles);
+router.use('/permissions', permissions);
+router.use('/rolepermissions',rolepermissions);
 
 // router.get('/users', (req, res) => {
 //     User.findAll()
