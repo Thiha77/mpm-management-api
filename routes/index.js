@@ -34,6 +34,12 @@ router.get('/testdb', (req, res) => {
     })
 })
 
+router.post('/testpost', (req, res) => {
+    console.log(req.body.data);
+    console.log(req.body);{}
+    res.status(404).send(req.body);
+});
+
 router.use('/employees', employees);
 router.use('/attendances', attendances);
 

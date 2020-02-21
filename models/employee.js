@@ -13,11 +13,11 @@ module.exports = (sequelize, DataTypes) => {
     postalCode: DataTypes.STRING,
     dob: DataTypes.DATE,
     gender: DataTypes.ENUM('male', 'female'),
-    positon: DataTypes.STRING,
+    position: DataTypes.STRING,
     basicSalary: DataTypes.DECIMAL(20,2),
     nationality: DataTypes.STRING,
     race: DataTypes.STRING,
-    maritalStatus: DataTypes.ENUM('single', 'marriaged'),
+    maritalStatus: DataTypes.ENUM('single', 'married'),
     employeeStatus: DataTypes.ENUM('active', 'inactive'),
     photo: DataTypes.TEXT,
     userName: DataTypes.STRING,
@@ -28,7 +28,15 @@ module.exports = (sequelize, DataTypes) => {
     employee.hasMany(models.Attendance, {
       foreignKey: 'employeeId',
       as: 'attendances'
-    })
+    });
+    employee.hasOne(models.User, {
+      foreignKey: 'employeeId',
+      as: 'user'
+    });
+    employee.hasMany(models.Notice, {
+      foreignKey: 'employeeId',
+      as: 'notices'
+    });
   };
   return employee;
 };

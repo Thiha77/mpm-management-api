@@ -1,16 +1,16 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('admins', {
+    return queryInterface.createTable('permissions', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      name: Sequelize.STRING,
-      userName: Sequelize.STRING,
-      password: Sequelize.STRING,
+      name: {
+        type: Sequelize.ENUM('none','view','edit')
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -22,6 +22,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('admins');
+    return queryInterface.dropTable('permissions');
   }
 };
