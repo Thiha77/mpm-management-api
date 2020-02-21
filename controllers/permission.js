@@ -24,8 +24,8 @@ const save = (req, res) => {
     Permission.create({
         name: perName
     })
-    .then(res => {
-        res.sendStatus(200);
+    .then( (per) =>{
+        res.send(JSON.stringify(per));
     })
     .catch(err => res.send(JSON.stringify(err))); 
 }
