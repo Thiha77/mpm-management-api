@@ -4,6 +4,7 @@ const sequelize = require('../db');
 
 const employees = require('./employee');
 const attendances = require('./attendance');
+const users = require('./user');
 // con.connect((err) => {
 //     if(err) throw err
 // })
@@ -42,6 +43,7 @@ router.post('/testpost', (req, res) => {
 
 router.use('/employees', employees);
 router.use('/attendances', attendances);
+router.use('/users', users);
 
 // router.get('/users', (req, res) => {
 //     User.findAll()
