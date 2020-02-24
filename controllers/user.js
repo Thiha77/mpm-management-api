@@ -11,7 +11,17 @@ const all = (req, res) => {
     })
 
 }
-
+const byId = (req, res) => {
+    let userId = req.params.id;
+    return User.findAll({
+        where: {
+            id: empId
+        }
+    })
+    .then( (emp) => {
+        res.send(JSON.stringify(emp));
+    })
+}
 const createUser =(req,res)=>{
     let name = req.body.name;
     let userName = req.body.userName;
@@ -65,18 +75,8 @@ const deleteUser =(req,res)=>{
         error: error
     }));
 }
-// const byId = (req, res) => {
-//     let empId = req.params.id;
-//     return User.findAll({
-//         where: {
-//             id: empId
-//         }
-//     })
-//     .then( (emp) => {
-//         res.send(JSON.stringify(emp));
-//     })
-// }
+
 
 module.exports = {
-    all, createUser,updateUser,deleteUser
+    all, byId,createUser,updateUser,deleteUser
 }

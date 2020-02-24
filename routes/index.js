@@ -4,7 +4,14 @@ const sequelize = require('../db');
 
 const employees = require('./employee');
 const attendances = require('./attendance');
+<<<<<<< HEAD
 const users = require('./user');
+=======
+const notices = require('./notice');
+const roles = require('./role');
+const permissions = require('./permission');
+const rolepermissions = require('./rolepermission');
+>>>>>>> ca8dcfe227ee80692301677064ff40c5e847b683
 // con.connect((err) => {
 //     if(err) throw err
 // })
@@ -43,7 +50,14 @@ router.post('/testpost', (req, res) => {
 
 router.use('/employees', employees);
 router.use('/attendances', attendances);
+<<<<<<< HEAD
 router.use('/users', users);
+=======
+router.use('/notices', notices);
+router.use('/roles', roles);
+router.use('/permissions', permissions);
+router.use('/rolepermissions',rolepermissions);
+>>>>>>> ca8dcfe227ee80692301677064ff40c5e847b683
 
 // router.get('/users', (req, res) => {
 //     User.findAll()
