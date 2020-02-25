@@ -2,8 +2,9 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
 const router = require('./routes');
+const cors = require('cors');
 // const con = require('./db')
-
+app.use(cors());
 app.use(bodyParser.json())
 app.use(router)
 // con.connect((err) => {
