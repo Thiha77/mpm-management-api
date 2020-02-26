@@ -26,8 +26,8 @@ const save = (req, res) => {
         name: roleName,
         description: roleDescription
     })
-    .then(res => {
-        res.sendStatus(200);
+    .then( (roles) =>{
+        res.send(JSON.stringify(roles));
     })
     .catch(err => res.send(JSON.stringify(err))); 
 }
