@@ -1,14 +1,11 @@
 const attendanceRouter = require('express').Router();
-const Attendance = require('../../models').Attendance
+const attendanceController = require('../../controllers').attendance;
 
-
-attendanceRouter.get('/', (req, res) => {
-    Attendance.findAll()
-    .then( (attds) => {
-        res.send(JSON.stringify(attds));
-    })
-});
-
+attendanceRouter.get('/', attendanceController.all);
+attendanceRouter.get('/:id', attendanceController.byId);
+attendanceRouter.post('/create', attendanceController.save);
+attendanceRouter.post('/update', attendanceController.update);
+attendanceRouter.post('/delete', attendanceController.destory);
 
 
 
