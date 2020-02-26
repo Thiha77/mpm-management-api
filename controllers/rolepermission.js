@@ -26,8 +26,8 @@ const save = (req, res) => {
         roleId: roleId,
         permissionId: permissionId
     })
-    .then(res => {
-        res.sendStatus(200);
+    .then( (rolePer) =>{
+        res.send(JSON.stringify(rolePer));
     })
     .catch(err => res.send(JSON.stringify(err))); 
 }
