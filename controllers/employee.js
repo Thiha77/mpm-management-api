@@ -3,6 +3,7 @@ const Employee = require('../models').Employee;
 const all = (req, res) => {
     return Employee.findAll({
         // attributes: ['id', 'name', ['employeeStatus', 'Employee Status']]
+        
     })
     .then( (emps) =>{
         res.send(JSON.stringify(emps));
