@@ -9,7 +9,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       name: {
-        type: Sequelize.ENUM('none','view','edit')
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,

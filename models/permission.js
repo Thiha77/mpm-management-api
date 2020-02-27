@@ -1,7 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const permission = sequelize.define('Permission', {
-    name: DataTypes.ENUM('none','view','edit')
+    name: DataTypes.STRING
   }, {});
   permission.associate = function(models) {
       permission.hasMany(models.RolePermission, {
