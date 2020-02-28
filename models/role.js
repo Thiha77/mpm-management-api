@@ -4,11 +4,15 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     description: DataTypes.STRING
   }, {});
-  role.associate = function(models) {
+  role.associate = models => {
     role.hasMany(models.RolePermission, {
       foreignKey: 'roleId',
       as: 'rolePermissions'
     });
+    role.hasMany(models.User, {
+      foreignKey: 'roleId',
+      as: 'users'
+    })
   };
   return role;
 };

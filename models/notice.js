@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     summary: DataTypes.STRING,
     employeeId: DataTypes.INTEGER
   }, {});
-  notice.associate = function(models) {
+  notice.associate = models => {
     notice.belongsTo(models.Employee, {
       foreignKey: 'employeeId',
       onDelete: 'CASCADE'

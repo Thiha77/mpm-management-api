@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     recordedDateTime: DataTypes.DATE,
     employeeId: DataTypes.INTEGER
   }, {});
-  attendance.associate = (models) => {
+  attendance.associate = models => {
     // associations can be defined here
     attendance.belongsTo(models.Employee, {
       foreignKey: 'employeeId',

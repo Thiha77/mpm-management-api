@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     userName: DataTypes.STRING,
     password: DataTypes.STRING
   }, {});
-  employee.associate = (models) => {
+  employee.associate = models => {
     // associations can be defined here
     employee.hasMany(models.Attendance, {
       foreignKey: 'employeeId',
