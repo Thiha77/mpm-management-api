@@ -20,14 +20,40 @@ const byId = (req,res) => {
 }
 
 const save = (req, res) => {
-    let perName = req.body.name;
-    Permission.create({
-        name: perName
-    })
-    .then( (per) =>{
-        res.send(JSON.stringify(per));
-    })
-    .catch(err => res.send(JSON.stringify(err))); 
+    let specialPer = req.body.specialPer;
+    if(specialPer == true)
+    {
+        let perName = req.body.name;
+        Permission.create({
+            name: perName
+        })
+        .then( (per) =>{
+            res.send(JSON.stringify(per));
+        })
+        .catch(err => res.send(JSON.stringify(err))); 
+    }else
+    {
+        let perName1 = req.body.name+"-none";
+        let perName2 = req.body.name+"-view";
+        let perName3 = req.body.name+"-edit";
+
+        Permission.bulkCreate([
+            { 
+                name: perName1
+            }, 
+            {
+                name: perName2
+            }, 
+            { 
+                name: perName3
+            } 
+        ])
+        .then( (per) =>{
+            res.send(JSON.stringify(per));
+        })
+        .catch(err => res.send(JSON.stringify(err))); 
+    }
+    
 }
 
 const update = (req,res) => {
