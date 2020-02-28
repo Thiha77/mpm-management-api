@@ -1,5 +1,6 @@
 const User = require('../models').User;
 const Employee = require('../models').Employee;
+const Bcrypt = require('bcrypt');
 
 const all = (req, res) => {
     return User.findAll({
@@ -25,7 +26,8 @@ const byId = (req, res) => {
 const createUser =(req,res)=>{
     let name = req.body.name;
     let userName = req.body.userName;
-    let password = req.body.password;
+    let password = Bcrypt.hashSync(req.body.password, 10);
+    console.log(password);
     let employeeId = req.body.employeeId;
     User.create({
         name: name,
