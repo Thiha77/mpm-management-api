@@ -1,4 +1,6 @@
 const Permission = require('../models').Permission;
+const RolePermission = require('../models').RolePermission;
+const { Op } = require("sequelize");
 
 const all = (req, res) => {
     return Permission.findAll({
@@ -83,6 +85,35 @@ const destory = (req, res) => {
     .catch(err => res.send(JSON.stringify(err)));
 }
 
+const byRoleId = (req, res) => {
+    let roleId = req.params.roleId;
+    let permissions = {};
+    RolePermission.findAll({
+        attributes: ['permissionId'],
+        where: {
+            roleId: roleId
+        }
+    }).then((result) => {
+        permissions = result;
+    
+        let pIds = [];
+        for (let i = 0; i < permissions.length; i++) {
+            pIds.push(permissions[i].permissionId);   
+        }
+
+        return Permission.findAll({
+            where: {
+                id: {
+                    [Op.notIn]: pIds
+                }
+            }
+        }).then( (per) =>{
+            res.send(JSON.stringify(per));
+        })
+        .catch(err => res.send(JSON.stringify(err))); 
+    })
+}
+
 module.exports = {
-    all,byId,save,update,destory
+    all,byId,save,update,destory,byRoleId
 }

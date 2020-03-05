@@ -1,10 +1,11 @@
-const perRouter = require('express').Router();
-const perController = require('../../controllers').permission;
+const permissionRouter = require('express').Router();
+const permissionController = require('../../controllers').permission;
 
-perRouter.get('/', perController.all);
-perRouter.get('/:id', perController.byId);
-perRouter.post('/create', perController.save);
-perRouter.post('/update', perController.update);
-perRouter.post('/delete', perController.destory);
+permissionRouter.get('/', permissionController.all);
+permissionRouter.get('/:id', permissionController.byId);
+permissionRouter.post('/create', permissionController.save);
+permissionRouter.post('/update', permissionController.update);
+permissionRouter.post('/delete', permissionController.destory);
+permissionRouter.get('/byRoleId/:roleId', permissionController.byRoleId);
 
-module.exports = perRouter;
+module.exports = permissionRouter;

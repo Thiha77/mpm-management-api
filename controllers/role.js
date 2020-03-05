@@ -55,8 +55,8 @@ const destory = (req, res) => {
         where: {
             id: roleId
         }
-    }).then(res => {
-        res.sendStatus(200);
+    }).then(result => {
+        res.send(JSON.stringify(result));
     })
     .catch(err => res.send(JSON.stringify(err)));
 }

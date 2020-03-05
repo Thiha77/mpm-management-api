@@ -1,8 +1,19 @@
 const RolePermission = require('../models').RolePermission;
+const Role = require('../models').Role;
+const Permission = require('../models').Permission;
 
 const all = (req, res) => {
     return RolePermission.findAll({
-
+        include: [
+            {
+                model: Role,
+                attributes: ['name']
+            },
+            {
+                model: Permission,
+                attributes: ['name']
+            }
+        ]
     }).then( (rolePer) =>{
         res.send(JSON.stringify(rolePer));
     });
