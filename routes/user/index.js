@@ -6,4 +6,5 @@ userRouter.get('/', userController.all);
 userRouter.post('/create', userController.createUser);
 userRouter.post('/update', userController.updateUser);
 userRouter.post('/delete', userController.deleteUser);
+userRouter.post('/searchuser', userController.searchUser);
 module.exports = userRouter;

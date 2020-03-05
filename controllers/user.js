@@ -77,8 +77,22 @@ const deleteUser =(req,res)=>{
         error: error
     }));
 }
-
+//eaindra 3.3.2020
+const searchUser =(req,res)=>{
+    const userName = req.body.userName;
+    const password = req.body.password;
+    return User.findAll({
+        where: {
+            userName: userName,
+            password: password 
+        }
+    })
+    .then( (user) => {
+        res.send(JSON.stringify(user));
+    })
+}
+//eaindra 3.3.2020
 
 module.exports = {
-    all, byId,createUser,updateUser,deleteUser
+    all, byId,createUser,updateUser,deleteUser, searchUser
 }
