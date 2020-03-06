@@ -1,5 +1,7 @@
 const User = require('../models').User;
 const Employee = require('../models').Employee;
+const { Op } = require("sequelize");
+
 const Bcrypt = require('bcrypt');
 
 const all = (req, res) => {
@@ -94,6 +96,30 @@ const searchUser =(req,res)=>{
 }
 //eaindra 3.3.2020
 
+const getEmpData = (req,res)=>{
+    let user = {};
+    User.findAll({
+        attributes: ['employeeId']
+    }).then((result) => {
+        user = result;
+        let eIds = [];
+        for (let i = 0; i < user.length; i++) {
+            eIds.push(user[i].employeeId);   
+        }
+
+        return Employee.findAll({
+            where: {
+                id: {
+                    [Op.notIn]: eIds
+                }
+            }
+        }).then( (emp) =>{
+            res.send(JSON.stringify(emp));
+        })
+        .catch(err => res.send(JSON.stringify(err))); 
+    });
+}
+
 module.exports = {
-    all, byId,createUser,updateUser,deleteUser, searchUser
+    all, byId,createUser,updateUser,deleteUser, searchUser, getEmpData
 }
