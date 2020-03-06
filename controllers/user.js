@@ -1,6 +1,9 @@
 const User = require('../models').User;
 const Employee = require('../models').Employee;
+<<<<<<< HEAD
 const Bcrypt = require('bcrypt');
+=======
+>>>>>>> aa9eb7adf520aa2592aed508efb8ba457f43606e
 
 const all = (req, res) => {
     return User.findAll({
@@ -26,8 +29,12 @@ const byId = (req, res) => {
 const createUser =(req,res)=>{
     let name = req.body.name;
     let userName = req.body.userName;
+<<<<<<< HEAD
     let password = Bcrypt.hashSync(req.body.password, 10);
     console.log(password);
+=======
+    let password = req.body.password;
+>>>>>>> aa9eb7adf520aa2592aed508efb8ba457f43606e
     let employeeId = req.body.employeeId;
     User.create({
         name: name,
@@ -77,6 +84,7 @@ const deleteUser =(req,res)=>{
         error: error
     }));
 }
+<<<<<<< HEAD
 //eaindra 3.3.2020
 const searchUser =(req,res)=>{
     const userName = req.body.userName;
@@ -95,4 +103,10 @@ const searchUser =(req,res)=>{
 
 module.exports = {
     all, byId,createUser,updateUser,deleteUser, searchUser
+=======
+
+
+module.exports = {
+    all, byId,createUser,updateUser,deleteUser
+>>>>>>> aa9eb7adf520aa2592aed508efb8ba457f43606e
 }
