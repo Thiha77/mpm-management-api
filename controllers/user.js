@@ -82,6 +82,7 @@ const searchUser =(req,res)=>{
     const userName = req.body.userName;
     const password = req.body.password;
     return User.findAll({
+        attributes: { exclude: ['password']},
         where: {
             userName: userName,
             password: password 

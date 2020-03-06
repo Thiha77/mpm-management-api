@@ -52,7 +52,7 @@ const update = (req, res) => {
     });
 }
 
-const destory = (req, res) => {
+const destroy = (req, res) => {
     let id = req.body.id;
     return Notice.destroy({
         where: {
@@ -64,5 +64,5 @@ const destory = (req, res) => {
 }
 
 module.exports = {
-    all, byId, save, update, destory
+    all, byId, save, update, destroy
 }
