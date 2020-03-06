@@ -103,7 +103,17 @@ const updateEmployee=(req,res)=>{
             error: error
         }));
 }
-
+const searchByemployeeId = (req, res) => {
+    let empId = req.body.employeeId;
+    return Employee.findAll({
+        where: {
+            id: empId
+        }
+    })
+    .then( (emp) => {
+        res.send(JSON.stringify(emp));
+    })
+}
 module.exports = {
-    all, byId,createEmployee,deleteEmployee,updateEmployee
+    all, byId,createEmployee,deleteEmployee,updateEmployee, searchByemployeeId
 }
