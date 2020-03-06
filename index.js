@@ -7,6 +7,7 @@ const cors = require('cors');
 app.use(cors());
 app.use(bodyParser.json())
 app.use(router)
+app.use(bodyParser.urlencoded({extended: true}))
 // con.connect((err) => {
 //     if(err) throw err;
 //     console.log('Mysql is connected')

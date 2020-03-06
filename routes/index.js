@@ -9,6 +9,7 @@ const notices = require('./notice');
 const roles = require('./role');
 const permissions = require('./permission');
 const rolepermissions = require('./rolepermission');
+const uploader = require('./upload');
 // con.connect((err) => {
 //     if(err) throw err
 // })
@@ -52,6 +53,7 @@ router.use('/notices', notices);
 router.use('/roles', roles);
 router.use('/permissions', permissions);
 router.use('/rolepermissions',rolepermissions);
+router.use('/upload',uploader);
 
 // router.get('/users', (req, res) => {
 //     User.findAll()
