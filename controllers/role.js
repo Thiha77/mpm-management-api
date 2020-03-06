@@ -1,4 +1,5 @@
 const Role = require('../models').Role;
+const { Op } = require("sequelize");
 
 const all = (req, res) => {
     return Role.findAll({
@@ -61,6 +62,26 @@ const destory = (req, res) => {
     .catch(err => res.send(JSON.stringify(err)));
 }
 
+const search = (req, res) => {
+    let search = req.params.text;
+    return Role.findAll({
+        where: {
+            [Op.or]:[
+                {
+                    id: { [Op.like] : [`%${search}%`] }
+                },{
+                    name: { [Op.like] : [`%${search}%`] }
+                },{
+                    description: { [Op.like] : [`%${search}%`] }
+                }
+            ]
+        }
+    }).then( (result) =>{
+        res.send(JSON.stringify(result));
+    })
+    .catch(err => res.send(JSON.stringify(err)));
+}
+
 module.exports = {
-    all,byId,save,update,destory
+    all,byId,save,update,destory,search
 }
