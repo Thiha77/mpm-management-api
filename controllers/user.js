@@ -83,7 +83,7 @@ const deleteUser =(req,res)=>{
 const searchUser =(req,res)=>{
     const userName = req.body.userName;
     const password = req.body.password;
-    return User.findAll({
+    return User.findOne({
         attributes: { exclude: ['password']},
         where: {
             userName: userName,

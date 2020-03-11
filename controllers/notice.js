@@ -1,5 +1,6 @@
 const Notice = require('../models').Notice;
 const Employee = require('../models').Employee;
+const { Op } = require("sequelize");
 
 const all = (req, res) => {
     return Notice.findAll({
@@ -63,6 +64,40 @@ const destroy = (req, res) => {
     });
 }
 
+const search = (req, res) => {
+    let textSearch = req.params.textSearch;
+    return Notice.findAll({
+        include: [
+            {
+                model: Employee,
+                attributes: ['name']
+            }
+        ],
+        where: {
+            [Op.or]:[
+                {
+                    id: { [Op.like] : [`%${textSearch}%`] }
+                },
+                {
+                    title: { [Op.like] : [`%${textSearch}%`] }
+                },
+                {
+                    description: { [Op.like] : [`%${textSearch}%`] }
+                },
+                {
+                    summary: { [Op.like] : [`%${textSearch}%`] }
+                },
+                {
+                    '$Employee.name$' : { [Op.like] : [`%${textSearch}%`] }
+                }
+            ]
+        }
+    }).then( (result) =>{
+        res.send(JSON.stringify(result));
+    })
+    .catch(err => res.send(JSON.stringify(err)));
+}
+
 module.exports = {
-    all, byId, save, update, destroy
+    all, byId, save, update, destroy, search
 }
