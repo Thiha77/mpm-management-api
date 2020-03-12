@@ -73,7 +73,7 @@ const destory = (req, res) => {
     .catch(err => res.send(JSON.stringify(err)));
 }
 
-const search = (req, res) =>{
+const search = (req, res) => {
     let search = req.params.text;
     return RolePermission.findAll({
         include: [
@@ -93,6 +93,28 @@ const search = (req, res) =>{
     });
 }
 
+const permissionNameByRoleId = (req, res) => {
+    let roleId = req.params.id;
+    return RolePermission.findAll({
+        attributes:{
+            exclude: [
+                'id','roleId','permissionId','createdAt','updatedAt'
+            ]
+        },
+        include: [
+            {
+                model: Permission,
+                attributes: ['name']
+            }
+        ],
+        where: {
+            roleId: roleId
+        }
+    }).then( (result) =>{
+        res.send(JSON.stringify(result));
+    });
+}
+
 module.exports = {
-    all,byId,save,update,destory,search
+    all,byId,save,update,destory,search,permissionNameByRoleId
 }
