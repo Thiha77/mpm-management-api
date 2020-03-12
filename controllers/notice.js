@@ -18,7 +18,7 @@ const all = (req, res) => {
 
 const byId = (req, res) => {
     const id = req.params.id;
-    return Notice.findAll({
+    return Notice.findOne({
         where: {
             id: id
         }
