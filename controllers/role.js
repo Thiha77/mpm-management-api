@@ -11,7 +11,7 @@ const all = (req, res) => {
 
 const byId = (req,res) => {
     let roleId = req.params.id;
-    return Role.findAll({
+    return Role.findOne({
         where: {
             id: roleId
         }
