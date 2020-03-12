@@ -30,6 +30,7 @@ const uploadSingle = (req, res) => {
              res.json({
                  success :true,
                  message:'Image uploaded',
+                 path: req.file.path
                 //  body: req.body
              });
           })
