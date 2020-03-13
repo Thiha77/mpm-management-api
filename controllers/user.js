@@ -25,7 +25,7 @@ const all = (req, res) => {
 }
 const byId = (req, res) => {
     let userId = req.params.id;
-    return User.findAll({
+    return User.findOne({
         where: {
             id: empId
         }
