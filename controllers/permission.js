@@ -12,7 +12,7 @@ const all = (req, res) => {
 
 const byId = (req,res) => {
     let perId = req.params.id;
-    return Permission.findAll({
+    return Permission.findOne({
         where: {
             id: perId
         }
