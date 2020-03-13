@@ -110,8 +110,6 @@ const searchUser =(req,res)=>{
 
 const getEmpData = (req,res)=>{
     let users;
-    // return User.findAll()
-    // .then( (r) => res.send(JSON.stringify(r)));
     User.findAll({
         attributes: ['employeeId']
     }).then((result) => {
@@ -121,7 +119,6 @@ const getEmpData = (req,res)=>{
         for (let i = 0; i < users.length; i++) {
             eIds.push(users[i].employeeId);   
         }
-
         return Employee.findAll({
             where: {
                 id: {
