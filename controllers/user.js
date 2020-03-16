@@ -46,16 +46,16 @@ const createUser =(req,res)=>{
         password:password,
         employeeId:employeeId,
         roleId:roleId
-    }).then(res => {
-        res.sendStatus(200);
+    }).then((user) => {
+        res.send(JSON.stringify(user));
     })
-    .catch(err => res.send(JSON.stringify(err)));
+    // .catch(err => res.send(JSON.stringify(err)));
 }
 const updateUser =(req,res)=>{
     const id = req.body.id;
     let name = req.body.name;
     let userName = req.body.userName;
-    let password = req.body.password;
+    let password = Bcrypt.hashSync(req.body.password, 10);
     let employeeId = req.body.employeeId;
     let roleId = req.body.roleId;
     User.update({
@@ -82,14 +82,9 @@ const deleteUser =(req,res)=>{
         where:{
             id:id
         }
-    }).then(User=> res.json({
-        error:false,
-        message:"deleted Success!"
-    }))
-    .catch(error => res.json({
-        error: true,
-        error: error
-    }));
+    }).then( (user) => {
+        res.send(JSON.stringify(user));
+    });
 }
 //eaindra 3.3.2020
 const searchUser =(req,res)=>{
