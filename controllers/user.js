@@ -25,9 +25,9 @@ const all = (req, res) => {
 }
 const byId = (req, res) => {
     let userId = req.params.id;
-    return User.findAll({
+    return User.findOne({
         where: {
-            id: empId
+            id: userId
         }
     })
     .then( (emp) => {
@@ -109,16 +109,16 @@ const searchUser =(req,res)=>{
 //eaindra 3.3.2020
 
 const getEmpData = (req,res)=>{
-    let user = {};
+    let users;
     User.findAll({
         attributes: ['employeeId']
     }).then((result) => {
-        user = result;
+        users = result;
+        console.log(users);
         let eIds = [];
-        for (let i = 0; i < user.length; i++) {
-            eIds.push(user[i].employeeId);   
+        for (let i = 0; i < users.length; i++) {
+            eIds.push(users[i].employeeId);   
         }
-
         return Employee.findAll({
             where: {
                 id: {
