@@ -28,7 +28,13 @@ const byId = (req, res) => {
     return User.findOne({
         where: {
             id: userId
-        }
+        },
+        include: [
+            {
+                model: Employee,
+                attributes: ['name']
+            }
+        ]
     })
     .then( (emp) => {
         res.send(JSON.stringify(emp));
