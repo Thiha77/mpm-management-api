@@ -3,7 +3,6 @@ const { Op } = require("sequelize");
 
 const all = (req, res) => {
     return Role.findAll({
-
     }).then( (roles) =>{
         res.send(JSON.stringify(roles));
     });
