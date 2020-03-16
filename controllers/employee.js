@@ -13,7 +13,7 @@ const all = (req, res) => {
 
 const byId = (req, res) => {
     let empId = req.params.id;
-    return Employee.findAll({
+    return Employee.findOne({
         where: {
             id: empId
         }
@@ -46,8 +46,8 @@ const createEmployee =(req,res) => {
         userName:req.body.userName,
         password:req.body.password
 
-    }).then(res => {
-        res.sendStatus(200);
+    }).then(result => {
+        res.send(JSON.stringify(result));
       })
       .catch(err => res.send(JSON.stringify(err)));
     
@@ -58,13 +58,10 @@ const deleteEmployee =(req,res) => {
         where: {
             id: id
         }
-    }).then(Employee => res.json({
-        error: false,
-        message: "Deleted Success!"
-    })).catch(error => res.json({
-        error: true,
-        error: error
-    }));
+    }).then(result => {
+        res.send(JSON.stringify(result));
+      })
+      .catch(err => res.send(JSON.stringify(err)));
 }
 const updateEmployee=(req,res)=>{
     const id = req.body.id;
@@ -94,14 +91,10 @@ const updateEmployee=(req,res)=>{
             where: {
                 id: id
             }               
-        }).then(Attendance => res.json({
-            error: false,
-            message: "update Success!"
-        }))
-        .catch(error => res.json({
-            error: true,
-            error: error
-        }));
+        }).then(result => {
+            res.send(JSON.stringify(result));
+          })
+          .catch(err => res.send(JSON.stringify(err)));
 }
 const searchByemployeeId = (req, res) => {
     let empId = req.body.employeeId;
@@ -114,6 +107,22 @@ const searchByemployeeId = (req, res) => {
         res.send(JSON.stringify(emp));
     })
 }
+
+const updateEmployeeImage = (req, res) => {
+    let id = req.body.id;
+    let photo = req.body.photo;
+    Employee.update({
+        photo: photo
+    },{
+        where: {
+            id: id
+        }
+    }).then(result => {
+        res.send(JSON.stringify(result));
+    })
+    .catch(err => res.send(JSON.stringify(err)));
+}
+
 module.exports = {
-    all, byId,createEmployee,deleteEmployee,updateEmployee, searchByemployeeId
+    all, byId,createEmployee,deleteEmployee,updateEmployee, searchByemployeeId, updateEmployeeImage
 }
