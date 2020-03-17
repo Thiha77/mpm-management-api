@@ -6,6 +6,7 @@ employeeRouter.get('/:id', empController.byId);
 employeeRouter.post('/create',empController.createEmployee);
 employeeRouter.post('/delete',empController.deleteEmployee);
 employeeRouter.post('/update',empController.updateEmployee);
+employeeRouter.get('/search/:all', empController.searchEmlpoyee);
 employeeRouter.post('/updateImage',empController.updateEmployeeImage);
 employeeRouter.post('/searchByemployeeId',empController.searchByemployeeId);
 
