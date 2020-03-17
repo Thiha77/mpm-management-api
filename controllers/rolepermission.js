@@ -1,6 +1,7 @@
 const RolePermission = require('../models').RolePermission;
 const Role = require('../models').Role;
 const Permission = require('../models').Permission;
+const { Op } = require("sequelize");
 
 const all = (req, res) => {
     return RolePermission.findAll({
@@ -66,12 +67,54 @@ const destory = (req, res) => {
         where: {
             id: rolePerId
         }
-    }).then(res => {
-        res.sendStatus(200);
+    }).then(result => {
+        res.send(JSON.stringify(result));
     })
     .catch(err => res.send(JSON.stringify(err)));
 }
 
+const search = (req, res) => {
+    let search = req.params.text;
+    return RolePermission.findAll({
+        include: [
+            {
+                model: Role,
+                where: {
+                    name: { [Op.like] : [`%${search}%`] }
+                }
+            },
+            {
+                model: Permission,
+                attributes: ['name']
+            }
+        ]
+    }).then( (rolePer) =>{
+        res.send(JSON.stringify(rolePer));
+    });
+}
+
+const permissionNameByRoleId = (req, res) => {
+    let roleId = req.params.id;
+    return RolePermission.findAll({
+        attributes:{
+            exclude: [
+                'id','roleId','permissionId','createdAt','updatedAt'
+            ]
+        },
+        include: [
+            {
+                model: Permission,
+                attributes: ['name']
+            }
+        ],
+        where: {
+            roleId: roleId
+        }
+    }).then( (result) =>{
+        res.send(JSON.stringify(result));
+    });
+}
+
 module.exports = {
-    all,byId,save,update,destory
+    all,byId,save,update,destory,search,permissionNameByRoleId
 }

@@ -1,10 +1,13 @@
-const rolePerRouter = require('express').Router();
-const rolePerController = require('../../controllers').rolepermission;
+const rolePermissionRouter = require('express').Router();
+const rolePermissionController = require('../../controllers').rolepermission;
 
-rolePerRouter.get('/', rolePerController.all);
-rolePerRouter.get('/:id', rolePerController.byId);
-rolePerRouter.post('/create', rolePerController.save);
-rolePerRouter.post('/update', rolePerController.update);
-rolePerRouter.post('/delete', rolePerController.destory);
+rolePermissionRouter.get('/', rolePermissionController.all);
+rolePermissionRouter.get('/:id', rolePermissionController.byId);
+rolePermissionRouter.get('/search/:text', rolePermissionController.search);
+rolePermissionRouter.get('/permissionNameByRoleId/:id', rolePermissionController.permissionNameByRoleId);
+rolePermissionRouter.post('/create', rolePermissionController.save);
+rolePermissionRouter.post('/update', rolePermissionController.update);
+rolePermissionRouter.post('/delete', rolePermissionController.destory);
 
-module.exports = rolePerRouter;
+
+module.exports = rolePermissionRouter;

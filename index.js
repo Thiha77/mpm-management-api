@@ -8,6 +8,7 @@ app.use(cors());
 app.use(bodyParser.json())
 app.use(router)
 app.use(bodyParser.urlencoded({extended: true}))
+app.use(express.static(__dirname))
 // con.connect((err) => {
 //     if(err) throw err;
 //     console.log('Mysql is connected')

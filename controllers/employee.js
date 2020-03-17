@@ -1,4 +1,5 @@
 const Employee = require('../models').Employee;
+const { Op } = require("sequelize");
 
 const all = (req, res) => {
     return Employee.findAll({
@@ -13,7 +14,7 @@ const all = (req, res) => {
 
 const byId = (req, res) => {
     let empId = req.params.id;
-    return Employee.findAll({
+    return Employee.findOne({
         where: {
             id: empId
         }
@@ -46,8 +47,8 @@ const createEmployee =(req,res) => {
         userName:req.body.userName,
         password:req.body.password
 
-    }).then(res => {
-        res.sendStatus(200);
+    }).then(result => {
+        res.send(JSON.stringify(result));
       })
       .catch(err => res.send(JSON.stringify(err)));
     
@@ -58,14 +59,12 @@ const deleteEmployee =(req,res) => {
         where: {
             id: id
         }
-    }).then(Employee => res.json({
-        error: false,
-        message: "Deleted Success!"
-    })).catch(error => res.json({
-        error: true,
-        error: error
-    }));
+    }).then(result => {
+        res.send(JSON.stringify(result));
+      })
+      .catch(err => res.send(JSON.stringify(err)));
 }
+
 const updateEmployee=(req,res)=>{
     const id = req.body.id;
     return Employee.update({  
@@ -94,16 +93,60 @@ const updateEmployee=(req,res)=>{
             where: {
                 id: id
             }               
-        }).then(Attendance => res.json({
-            error: false,
-            message: "update Success!"
-        }))
-        .catch(error => res.json({
-            error: true,
-            error: error
-        }));
+        }).then(result => {
+            res.send(JSON.stringify(result));
+          })
+          .catch(err => res.send(JSON.stringify(err)));
+}
+const searchByemployeeId = (req, res) => {
+    let empId = req.body.employeeId;
+    return Employee.findAll({
+        where: {
+            id: empId
+        }
+    })
+    .then( (emp) => {
+        res.send(JSON.stringify(emp));
+    })
+}
+const searchEmlpoyee=(req,res) => {
+    let searchEmp = req.params.all;
+    console.log("search",searchEmp);
+    return Employee.findAll({
+        where: {
+            [Op.or]:[
+                {
+                    id: { [Op.like] : [`%${searchEmp}%`] }
+                },{
+                    name: { [Op.like] : [`%${searchEmp}%`] }
+                },{
+                    gender: { [Op.like] : [`${searchEmp}%`] }
+                },{
+                    position: { [Op.like] : [`%${searchEmp}%`] }
+                }
+            ]
+        }
+    }).then( (result) =>{
+        res.send(JSON.stringify(result));
+    })
+    .catch(err => res.send(JSON.stringify(err)));
+
+}
+const updateEmployeeImage = (req, res) => {
+    let id = req.body.id;
+    let photo = req.body.photo;
+    Employee.update({
+        photo: photo
+    },{
+        where: {
+            id: id
+        }
+    }).then(result => {
+        res.send(JSON.stringify(result));
+    })
+    .catch(err => res.send(JSON.stringify(err)));
 }
 
 module.exports = {
-    all, byId,createEmployee,deleteEmployee,updateEmployee
+    all, byId,createEmployee,deleteEmployee,updateEmployee, searchByemployeeId, updateEmployeeImage,searchEmlpoyee
 }

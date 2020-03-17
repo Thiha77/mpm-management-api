@@ -12,7 +12,7 @@ const all = (req, res) => {
 
 const byId = (req,res) => {
     let perId = req.params.id;
-    return Permission.findAll({
+    return Permission.findOne({
         where: {
             id: perId
         }
@@ -79,8 +79,8 @@ const destory = (req, res) => {
         where: {
             id: perId
         }
-    }).then(res => {
-        res.sendStatus(200);
+    }).then(result => {
+        res.send(JSON.stringify(result));
     })
     .catch(err => res.send(JSON.stringify(err)));
 }
@@ -114,6 +114,24 @@ const byRoleId = (req, res) => {
     })
 }
 
+const search = (req, res) =>{
+    let search = req.params.text;
+    return Permission.findAll({
+        where: {
+            [Op.or]:[
+                {
+                    id: { [Op.like] : [`%${search}%`] }
+                },{
+                    name: { [Op.like] : [`%${search}%`] }
+                }
+            ]
+        }
+    }).then( (result) =>{
+        res.send(JSON.stringify(result));
+    })
+    .catch(err => res.send(JSON.stringify(err)));
+}
+
 module.exports = {
-    all,byId,save,update,destory,byRoleId
+    all,byId,save,update,destory,byRoleId, search
 }
