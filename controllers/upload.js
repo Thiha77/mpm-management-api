@@ -14,29 +14,55 @@ const storage = multer.diskStorage({
         }
         return cb(null, dir)
         })
+
       },
       filename: (req, file, cb) => {       
         //cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
         cb(null,file.originalname);
       }
 
-})
-  
-const upload = multer({ storage: storage }).single("Image");
+});
 
+
+ 
+const deleteImage =(req,res) => {
+   let id = req.body.id
+    if(!req.body.photo) {
+      console.log("No file received");
+      message="Error! in image delete";
+      return res.status(500).json('error in delete');
+    
+    }else {
+      console.log('file received');
+      console.log(req.body.photo);
+    }
+    try {
+     fs.unlinkSync(dir + req.body.photo);
+     console.log("successfully delete")
+     return res.status(200).send('Successfully! Image has been Deleted');
+
+    }catch (e) {
+    return res.status(400).send(e);
+  }
+}
+
+const upload = multer({ storage: storage }).single("Image");
 const uploadSingle = (req, res) => {
-    upload(req, res, function (err) {
+  
+    upload(req, res, function (err) {     
             if (err) {
               
-            } 
+            }
+           
              res.json({
                  success :true,
                  message:'Image uploaded',
                  //path: req.file.path
-                 path : req.protocol + "://" + req.host +":5000" + '/' + req.file.path
+                 path : req.protocol + "://" + req.hostname +":5000" + '/' + req.file.path,
+                 
              });
           })
 
 }
 
-module.exports = {uploadSingle}
+module.exports = {uploadSingle,deleteImage}
