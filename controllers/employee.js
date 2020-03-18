@@ -1,4 +1,5 @@
 const Employee = require('../models').Employee;
+const { Op } = require("sequelize");
 
 const all = (req, res) => {
     return Employee.findAll({
@@ -63,6 +64,7 @@ const deleteEmployee =(req,res) => {
       })
       .catch(err => res.send(JSON.stringify(err)));
 }
+
 const updateEmployee=(req,res)=>{
     const id = req.body.id;
     return Employee.update({  
@@ -107,7 +109,29 @@ const searchByemployeeId = (req, res) => {
         res.send(JSON.stringify(emp));
     })
 }
+const searchEmlpoyee=(req,res) => {
+    let searchEmp = req.params.all;
+    console.log("search",searchEmp);
+    return Employee.findAll({
+        where: {
+            [Op.or]:[
+                {
+                    id: { [Op.like] : [`%${searchEmp}%`] }
+                },{
+                    name: { [Op.like] : [`%${searchEmp}%`] }
+                },{
+                    gender: { [Op.like] : [`${searchEmp}%`] }
+                },{
+                    position: { [Op.like] : [`%${searchEmp}%`] }
+                }
+            ]
+        }
+    }).then( (result) =>{
+        res.send(JSON.stringify(result));
+    })
+    .catch(err => res.send(JSON.stringify(err)));
 
+}
 const updateEmployeeImage = (req, res) => {
     let id = req.body.id;
     let photo = req.body.photo;
@@ -124,5 +148,5 @@ const updateEmployeeImage = (req, res) => {
 }
 
 module.exports = {
-    all, byId,createEmployee,deleteEmployee,updateEmployee, searchByemployeeId, updateEmployeeImage
+    all, byId,createEmployee,deleteEmployee,updateEmployee, searchByemployeeId, updateEmployeeImage,searchEmlpoyee
 }
