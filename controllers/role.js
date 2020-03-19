@@ -3,6 +3,7 @@ const { Op } = require("sequelize");
 
 const all = (req, res) => {
     return Role.findAll({
+
     }).then( (roles) =>{
         res.send(JSON.stringify(roles));
     });
@@ -81,6 +82,26 @@ const search = (req, res) => {
     .catch(err => res.send(JSON.stringify(err)));
 }
 
+const paginate = (req, res) => {
+    let pageNo;
+    if(req.params.pageNo != null)
+    {
+        pageNo = req.params.pageNo;
+    }else
+    {
+        pageNo = 1;
+    }
+    let limit = 5;
+    let offset = (pageNo - 1) * limit;
+    // console.log(pageNo);
+    return Role.findAll({
+        offset: offset,
+        limit: limit
+    }).then( (roles) =>{
+        res.send(JSON.stringify(roles));
+    });
+}
+
 module.exports = {
-    all,byId,save,update,destory,search
+    all,byId,save,update,destory,search,paginate
 }
