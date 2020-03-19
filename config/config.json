@@ -5,7 +5,12 @@
     "database": "attendance_mpm",
     "host": "127.0.0.1",
     "dialect": "mariadb",
-    "operatorsAliases": 0
+    "operatorsAliases": 0,
+    "dialectOptions": {
+      "dateStrings": true,
+      "typeCast": true
+    },
+    "timezone": "Etc/GMT0+06:30"
   },
   "test": {
     "username": "root",
