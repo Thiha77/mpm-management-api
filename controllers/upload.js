@@ -1,7 +1,8 @@
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
-
+const Employee = require('../models').Employee;
+let photo;
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -24,25 +25,29 @@ const storage = multer.diskStorage({
 });
 
 
+// const getPhotoByEmpId = (req, res) => {
+//   let id =req.params.id;
+//   return Employee.findAll({
+//       attributes: ['id','photo'],
+//       where: {id: id},
+      
+//   })
+//   .then( (result) =>{
+//       res.send(JSON.stringify(result));   
+//   })
+// }
+
  
 const deleteImage =(req,res) => {
-   let id = req.body.id
-    if(!req.body.photo) {
-      console.log("No file received");
-      message="Error! in image delete";
-      return res.status(500).json('error in delete');
-    
-    }else {
-      console.log('file received');
-      console.log(req.body.photo);
-    }
+  let photo = req.body.photo;
+  let resultImage = photo.substr(22);
+  //console.log(resultImage);
     try {
-     fs.unlinkSync(dir + req.body.photo);
-     console.log("successfully delete")
-     return res.status(200).send('Successfully! Image has been Deleted');
+      fs.unlinkSync(resultImage);
+      res.status(200).send('Successfully! Image has been Deleted');
 
     }catch (e) {
-    return res.status(400).send(e);
+      res.status(400).send(e);
   }
 }
 
@@ -57,7 +62,6 @@ const uploadSingle = (req, res) => {
              res.json({
                  success :true,
                  message:'Image uploaded',
-                 //path: req.file.path
                  path : req.protocol + "://" + req.hostname +":5000" + '/' + req.file.path,
                  
              });

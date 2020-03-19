@@ -17,7 +17,7 @@ const byId = (req, res) => {
     return Employee.findOne({
         where: {
             id: empId
-        }
+        },
     })
     .then( (emp) => {
         res.send(JSON.stringify(emp));

@@ -1,8 +1,13 @@
 const Attendance = require('../models').Attendance;
-
+const Employee = require('../models').Employee;
 const all = (req, res) => {
     return Attendance.findAll({
-
+        include: [
+            {
+                model: Employee,
+                attributes: ['name']
+            }
+        ]
     })
     .then( (emps) =>{
         res.send(JSON.stringify(emps));
@@ -12,7 +17,7 @@ const all = (req, res) => {
 
 const byId = (req,res) => {
     let attId = req.params.id;
-    return Attendance.findAll({
+    return Attendance.findOne({
         where: {
             id: attId
         }
@@ -57,10 +62,9 @@ const destory = (req, res) => {
         where: {
             id: attId
         }
-    }).then(res => {
-        res.sendStatus(200);
-    })
-    .catch(err => res.send(JSON.stringify(err)));
+    }).then( (attendance) => {
+        res.send(JSON.stringify(attendance));
+    });
 }
 
 module.exports = {
