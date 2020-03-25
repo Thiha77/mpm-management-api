@@ -14,7 +14,8 @@ const all = (req, res) => {
                 model: Permission,
                 attributes: ['name']
             }
-        ]
+        ],
+        order: ['RoleId']
     }).then( (rolePer) =>{
         res.send(JSON.stringify(rolePer));
     });
