@@ -132,7 +132,41 @@ const getEmpData = (req,res)=>{
         .catch(err => res.send(JSON.stringify(err))); 
     });
 }
-
+const search = (req, res) => {
+    let search = req.params.text;
+    return User.findAll({
+        include: [
+            {
+                model: Employee,
+                attributes: ['name']
+            },
+            {
+                model: Role,
+                attributes: ['name']
+            }
+        ],
+        where: {
+            [Op.or]:[
+                {
+                    id: { [Op.like] : [`%${search}%`] }
+                },{
+                    name: { [Op.like] : [`%${search}%`] }
+                },{
+                    userName: { [Op.like] : [`%${search}%`] }
+                },
+                {
+                    '$Employee.name$' : { [Op.like] : [`%${search}%`] }
+                },
+                {
+                    '$Role.name$' : { [Op.like] : [`%${search}%`] }
+                }
+            ]
+        }
+    }).then( (result) =>{
+        res.send(JSON.stringify(result));
+    })
+    .catch(err => res.send(JSON.stringify(err)));
+}
 module.exports = {
-    all, byId,createUser,updateUser,deleteUser, searchUser, getEmpData
+    all, byId,createUser,updateUser,deleteUser, searchUser, getEmpData,search
 }
