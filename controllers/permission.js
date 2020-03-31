@@ -22,8 +22,8 @@ const byId = (req,res) => {
 }
 
 const save = (req, res) => {
-    let specialPer = req.body.specialPer;
-    if(specialPer == true)
+    let specialPermission = req.body.specialPermission;
+    if(specialPermission == true)
     {
         let perName = req.body.name;
         Permission.create({
