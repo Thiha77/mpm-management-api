@@ -1,5 +1,7 @@
 const Attendance = require('../models').Attendance;
 const Employee = require('../models').Employee;
+const { Op } = require("sequelize");
+const sequelize  = require('../db');
 const all = (req, res) => {
     return Attendance.findAll({
         include: [
@@ -66,7 +68,37 @@ const destory = (req, res) => {
         res.send(JSON.stringify(attendance));
     });
 }
+const search = (req, res) => {
+    let textSearch = req.params.textSearch;
+    return Attendance.findAll({
+        include: [
+            {
+                model: Employee,
+                attributes: ['name']
+            }
+        ],
+        where: {
+            [Op.or]:[
+                {
+                    id: { [Op.like] : [`%${textSearch}%`] }
+                },
+                {
+                    employeeId: { [Op.like] : [`%${textSearch}%`] }
+                },
+                {
+                    recordedDateTime:{[Op.between]:[`%${textSearch}%`+" 00:00:00",`%${textSearch}%`+" 23:59:00"]}
+                },
+                {
+                    '$Employee.name$' : { [Op.like] : [`%${textSearch}%`] }
+                }
+            ]
+        }
+    }).then( (result) =>{
+        res.send(JSON.stringify(result));
+    })
+    .catch(err => res.send(JSON.stringify(err)));
+}
 
 module.exports = {
-    all, byId, save, update, destory
+    all, byId, save, update, destory, search
 }
