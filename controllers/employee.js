@@ -67,6 +67,13 @@ const deleteEmployee =(req,res) => {
 
 const updateEmployee=(req,res)=>{
     const id = req.body.id;
+    const delImamge = req.body.delImamge;
+    let photo="";
+    if(delImamge){
+        photo="";
+    }else {
+        photo=req.body.photo;
+    }
     return Employee.update({  
         name:req.body.name,
         alias:req.body.alias,
@@ -86,7 +93,7 @@ const updateEmployee=(req,res)=>{
         race:req.body.race,
         maritalStatus:req.body.maritalStatus,
         employeeStatus:req.body.employeeStatus,
-        photo:req.body.photo,
+        photo:photo,
         userName:req.body.userName,
         password:req.body.password
         },{
