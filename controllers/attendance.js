@@ -2,6 +2,7 @@ const Attendance = require('../models').Attendance;
 const Employee = require('../models').Employee;
 const { Op } = require("sequelize");
 const sequelize  = require('../db');
+const moment = require("moment");
 const all = (req, res) => {
     return Attendance.findAll({
         include: [
@@ -98,7 +99,68 @@ const search = (req, res) => {
     })
     .catch(err => res.send(JSON.stringify(err)));
 }
-
+const searchadvance = (req, res) => {
+    let empId = req.body.employeeId;
+    let empName = req.body.employeeName;
+    let fromDate = req.body.fromDate;
+    // fromDate = fromDate+" 00:00:00";
+    let toDate = req.body.toDate;
+    // toDate = toDate+" 23:59:00";
+    return Attendance.findAll({        
+        include: [
+            {
+                model: Employee,
+                attributes: ['name']
+            }
+        ],
+        where: {
+            [Op.and]:[
+            {
+                 employeeId: { [Op.eq] : [empId]}
+            },
+            {
+                '$Employee.name$': { [Op.eq] : [empName]}
+            },
+            // {
+            //     [Op.or] :[     
+            //         {
+            //             where : sequelize.where(sequelize.fn('date', sequelize.col('recordedDateTime')), '=', fromDate)                    
+            //         },
+            //         {
+            //             where : sequelize.where(sequelize.fn('date', sequelize.col('recordedDateTime')), '=', toDate)
+            //         },
+            //         {   
+            //             recordedDateTime : fromDate != null && toDate != null ?  
+            //             {[Op.between]:[ moment(fromDate).format('YYYY-MM-DD HH:mm:ss'), moment(toDate).format('YYYY-MM-DD HH:mm:ss') ]} : { [Op.eq] : null}
+            //         }
+            //     ]
+            // }
+        //     {
+        //         [Op.or]: [{
+        //         from: {
+        //             [Op.lte]: fromDate,
+        //             [Op.gte]: toDate,
+        //         },
+        //         to: {
+        //             [Op.lte]: fromDate,
+        //             [Op.gte]: toDate,
+        //         },
+        //     }]
+        // }
+        {
+            
+                recordedDateTime: {
+                    [Op.between]: [fromDate+" 00:00:00", toDate+" 23:59:00"]
+                }
+            
+        }
+            ]
+        }
+    }).then( (result) =>{
+        res.send(JSON.stringify(result));
+    })
+    .catch(err => res.send(JSON.stringify(err)));
+}
 module.exports = {
-    all, byId, save, update, destory, search
+    all, byId, save, update, destory, search, searchadvance
 }
