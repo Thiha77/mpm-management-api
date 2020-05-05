@@ -98,7 +98,45 @@ const search = (req, res) => {
     })
     .catch(err => res.send(JSON.stringify(err)));
 }
-
+const searchadvance = (req, res) => {
+    let empId = req.body.employeeId;
+    let empName = req.body.employeeName;
+    let fromDate = req.body.fromDate;
+    fromDate = fromDate;
+    let toDate = req.body.toDate;
+    toDate = toDate;
+    return Attendance.findAll({        
+        include: [
+            {
+                model: Employee,
+                attributes: ['name']
+            }
+        ],
+        where: {
+            [Op.and]:[
+            {
+                      employeeId: { [Op.like] : `%${empId}%` } 
+            },
+            {
+                 '$Employee.name$': { [Op.like] : `%${empName}%` } 
+            },
+            {
+                [Op.and] :[     
+                    {
+                        where : sequelize.where(sequelize.fn('date', sequelize.col('recordedDateTime')), '>=', fromDate)                    
+                    },
+                    {
+                        where : sequelize.where(sequelize.fn('date', sequelize.col('recordedDateTime')), '<=', toDate)
+                    }
+                ]
+            }
+            ]
+        }
+    }).then( (result) =>{
+        res.send(JSON.stringify(result));
+    })
+    .catch(err => res.send(JSON.stringify(err)));
+}
 module.exports = {
-    all, byId, save, update, destory, search
+    all, byId, save, update, destory, search, searchadvance
 }
