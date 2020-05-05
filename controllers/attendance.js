@@ -2,6 +2,7 @@ const Attendance = require('../models').Attendance;
 const Employee = require('../models').Employee;
 const { Op } = require("sequelize");
 const sequelize  = require('../db');
+const moment = require("moment");
 const all = (req, res) => {
     return Attendance.findAll({
         include: [
@@ -102,9 +103,15 @@ const searchadvance = (req, res) => {
     let empId = req.body.employeeId;
     let empName = req.body.employeeName;
     let fromDate = req.body.fromDate;
+<<<<<<< HEAD
     fromDate = fromDate;
     let toDate = req.body.toDate;
     toDate = toDate;
+=======
+    // fromDate = fromDate+" 00:00:00";
+    let toDate = req.body.toDate;
+    // toDate = toDate+" 23:59:00";
+>>>>>>> 2667a3c0471eeeef545ca199f157d368a9a8e09a
     return Attendance.findAll({        
         include: [
             {
@@ -115,6 +122,7 @@ const searchadvance = (req, res) => {
         where: {
             [Op.and]:[
             {
+<<<<<<< HEAD
                       employeeId: { [Op.like] : `%${empId}%` } 
             },
             {
@@ -130,6 +138,46 @@ const searchadvance = (req, res) => {
                     }
                 ]
             }
+=======
+                 employeeId: { [Op.eq] : [empId]}
+            },
+            {
+                '$Employee.name$': { [Op.eq] : [empName]}
+            },
+            // {
+            //     [Op.or] :[     
+            //         {
+            //             where : sequelize.where(sequelize.fn('date', sequelize.col('recordedDateTime')), '=', fromDate)                    
+            //         },
+            //         {
+            //             where : sequelize.where(sequelize.fn('date', sequelize.col('recordedDateTime')), '=', toDate)
+            //         },
+            //         {   
+            //             recordedDateTime : fromDate != null && toDate != null ?  
+            //             {[Op.between]:[ moment(fromDate).format('YYYY-MM-DD HH:mm:ss'), moment(toDate).format('YYYY-MM-DD HH:mm:ss') ]} : { [Op.eq] : null}
+            //         }
+            //     ]
+            // }
+        //     {
+        //         [Op.or]: [{
+        //         from: {
+        //             [Op.lte]: fromDate,
+        //             [Op.gte]: toDate,
+        //         },
+        //         to: {
+        //             [Op.lte]: fromDate,
+        //             [Op.gte]: toDate,
+        //         },
+        //     }]
+        // }
+        {
+            
+                recordedDateTime: {
+                    [Op.between]: [fromDate+" 00:00:00", toDate+" 23:59:00"]
+                }
+            
+        }
+>>>>>>> 2667a3c0471eeeef545ca199f157d368a9a8e09a
             ]
         }
     }).then( (result) =>{
