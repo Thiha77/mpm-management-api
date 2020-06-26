@@ -78,6 +78,36 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date()
       },
+      {
+        name: 'role-none',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        name: 'role-view',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        name: 'role-edit',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        name: 'rolepermission-none',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        name: 'rolepermission-view',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        name: 'rolepermission-edit',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
     ]);
   },
 

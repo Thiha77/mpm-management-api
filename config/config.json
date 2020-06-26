@@ -2,12 +2,13 @@
   "development": {
     "username": "root",
     "password": null,
-    "database": "attendance_mpm",
+    "database": "mpm_mgmt",
     "host": "127.0.0.1",
     "dialect": "mariadb",
     "operatorsAliases": 0,
     "dialectOptions": {
       "dateStrings": true,
+      "charset" : "utf8",
       "typeCast": true
     },
     "timezone": "Etc/GMT0+06:30"
