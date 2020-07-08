@@ -40,21 +40,24 @@ const byId = (req, res) => {
         res.send(JSON.stringify(emp));
     })
 }
-const createUser =(req,res)=>{
+// Thiha 6.29.2020
+const createUser = (req,res)=>{
     let name = req.body.name;
     let userName = req.body.userName;
-    let password = Bcrypt.hashSync(req.body.password, 10);
     let employeeId = req.body.employeeId;
     let roleId = req.body.roleId;
-    User.create({
-        name: name,
-        userName: userName,
-        password:password,
-        employeeId:employeeId,
-        roleId:roleId
-    }).then((user) => {
-        res.send(JSON.stringify(user));
-    })
+    Bcrypt.hash(req.body.password, 10, (err, hash) => {
+        User.create({
+            name: name,
+            userName: userName,
+            password:hash,
+            employeeId:employeeId,
+            roleId:roleId
+        }).then((user) => {
+            res.send(JSON.stringify(user));
+        })
+    });
+    
     // .catch(err => res.send(JSON.stringify(err)));
 }
 const updateUser =(req,res)=>{
@@ -92,19 +95,28 @@ const deleteUser =(req,res)=>{
         res.send(JSON.stringify(user));
     });
 }
-//eaindra 3.3.2020
+//eaindra 3.3.2020 // Thiha 6.29.2020
 const searchUser =(req,res)=>{
     const userName = req.body.userName;
     const password = req.body.password;
+    console.log(Bcrypt.hashSync(req.body.password, 10));
     return User.findOne({
-        attributes: { exclude: ['password']},
+        // attributes: { exclude: ['password']},
         where: {
             userName: userName,
-            password: password 
+            // password: password
         }
     })
     .then( (user) => {
-        res.send(JSON.stringify(user));
+        console.log(user);
+        Bcrypt.compare(password, user.password, (err, result) => {
+            if(result){
+                res.send(JSON.stringify(user));
+            }else{
+                res.sendStatus(401);
+            }
+        });
+        
     })
 }
 //eaindra 3.3.2020

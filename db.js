@@ -11,10 +11,11 @@
 // const con = function getConnection(){
 //     return pool
 // }
+// import mariadb from 'mariadb';
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('attendance_mpm', 'root', '', {
+const sequelize = new Sequelize('mpm_mgmt', 'root', '', {
     host: 'localhost',
-    dialect: 'mariadb'
+    dialect: 'mariadb',
 });
 
 module.exports = sequelize;
