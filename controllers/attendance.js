@@ -8,8 +8,11 @@ const all = (req, res) => {
         include: [
             {
                 model: Employee,
-                attributes: ['name']
+                attributes: ['name', 'employeeId']
             }
+        ],
+        order: [
+            ['recordedDateTime', 'DESC']
         ]
     })
     .then( (emps) =>{
@@ -88,6 +91,7 @@ const search = (req, res) => {
                 },
                 {
                     recordedDateTime:{[Op.between]:[`%${textSearch}%`+" 00:00:00",`%${textSearch}%`+" 23:59:00"]}
+                    // recordedDateTime: { [Op.like] : [`%${textSearch}%`] }
                 },
                 {
                     '$Employee.name$' : { [Op.like] : [`%${textSearch}%`] }

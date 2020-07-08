@@ -5,8 +5,8 @@ module.exports = {
       return queryInterface.bulkInsert('users', [
         {
           name: 'John Doe',
-          userName: 'john',
-          password: 'admin',
+          userName: 'admin',
+          password: '$2b$10$f1pS0hqN/ozjAjOk1FmmQeX3ifLXASa71Mq6ekVy.hH.VJal2Rfxe',
           employeeId: 1,
           roleId: 1,
           createdAt: new Date(),

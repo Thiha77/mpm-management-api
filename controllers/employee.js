@@ -25,6 +25,7 @@ const byId = (req, res) => {
 }
 const createEmployee =(req,res) => {
     return Employee.create({
+        employeeId: req.body.employeeId,
         name:req.body.name,
         alias:req.body.alias,
         phoneNo:req.body.phoneNo,
@@ -74,7 +75,8 @@ const updateEmployee=(req,res)=>{
     }else {
         photo=req.body.photo;
     }
-    return Employee.update({  
+    return Employee.update({
+        employeeId:req.body.employeeId,
         name:req.body.name,
         alias:req.body.alias,
         phoneNo:req.body.phoneNo,
@@ -123,7 +125,7 @@ const searchEmlpoyee=(req,res) => {
         where: {
             [Op.or]:[
                 {
-                    id: { [Op.like] : [`%${searchEmp}%`] }
+                    employeeId: { [Op.like] : [`%${searchEmp}%`] }
                 },{
                     name: { [Op.like] : [`%${searchEmp}%`] }
                 },{

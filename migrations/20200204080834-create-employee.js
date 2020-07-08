@@ -8,6 +8,10 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      employeeId: {
+        unique: true,
+        type: Sequelize.STRING
+      },
       name: Sequelize.STRING,
       alias: Sequelize.STRING,
       phoneNo: Sequelize.STRING,
@@ -18,7 +22,7 @@ module.exports = {
       city: Sequelize.STRING,
       address: Sequelize.STRING,
       postalCode: Sequelize.STRING,
-      dob: Sequelize.DATE,
+      dob: Sequelize.DATEONLY,
       gender: Sequelize.ENUM('male', 'female'),
       position: Sequelize.STRING,
       basicSalary: Sequelize.DECIMAL(20,2),
