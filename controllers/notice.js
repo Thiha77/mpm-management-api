@@ -9,6 +9,9 @@ const all = (req, res) => {
                 model: Employee,
                 attributes: ['name']
             }
+        ],
+        order: [
+            ['createdAt', 'DESC']
         ]
     })
     .then( (notices) => {

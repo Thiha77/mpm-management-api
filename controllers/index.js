@@ -6,7 +6,8 @@ const permission = require('./permission');
 const rolepermission = require('./rolepermission');
 const attendance = require('./attendance');
 const uploader = require('./upload');
+const subscription = require('./subscription');
 
 module.exports = {
-    user, employee, notice , role, permission, rolepermission, attendance, uploader
+    user, employee, notice , role, permission, rolepermission, attendance, uploader, subscription
 }

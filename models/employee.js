@@ -22,7 +22,11 @@ module.exports = (sequelize, DataTypes) => {
     employeeStatus: DataTypes.ENUM('active', 'inactive'),
     photo: DataTypes.TEXT,
     userName: DataTypes.STRING,
-    password: DataTypes.STRING
+    password: DataTypes.STRING,
+    timeUsedHomeToOffice: DataTypes.STRING,
+    phoneNo2: DataTypes.STRING,
+    bankAccountNo: DataTypes.STRING,
+    currentFamilyMembers: DataTypes.TEXT
   }, {});
   employee.associate = models => {
     // associations can be defined here

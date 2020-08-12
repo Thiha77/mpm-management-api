@@ -39,14 +39,18 @@ const createEmployee =(req,res) => {
         dob:new Date(req.body.dob),
         gender:req.body.gender,
         position:req.body.position,
-        basicSalary:req.body.basicSalary,
+        // basicSalary:req.body.basicSalary,
         nationality:req.body.nationality,
         race:req.body.race,
         maritalStatus:req.body.maritalStatus,
         employeeStatus:req.body.employeeStatus,
         photo:req.body.photo,
         userName:req.body.userName,
-        password:req.body.password
+        password:req.body.password,
+        timeUsedHomeToOffice:req.body.timeUsedHomeToOffice,
+        phoneNo2:req.body.phoneNo2,
+        bankAccountNo:req.body.bankAccountNo,
+        currentFamilyMembers:req.body.currentFamilyMembers
 
     }).then(result => {
         res.send(JSON.stringify(result));
@@ -90,14 +94,18 @@ const updateEmployee=(req,res)=>{
         dob:new Date(req.body.dob),
         gender:req.body.gender,
         position:req.body.position,
-        basicSalary:req.body.basicSalary,
+        // basicSalary:req.body.basicSalary,
         nationality:req.body.nationality,
         race:req.body.race,
         maritalStatus:req.body.maritalStatus,
         employeeStatus:req.body.employeeStatus,
         photo:photo,
         userName:req.body.userName,
-        password:req.body.password
+        password:req.body.password,
+        timeUsedHomeToOffice:req.body.timeUsedHomeToOffice,
+        phoneNo2:req.body.phoneNo2,
+        bankAccountNo:req.body.bankAccountNo,
+        currentFamilyMembers:req.body.currentFamilyMembers
         },{
             where: {
                 id: id

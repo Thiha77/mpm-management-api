@@ -10,9 +10,7 @@ const roles = require('./role');
 const permissions = require('./permission');
 const rolepermissions = require('./rolepermission');
 const uploader = require('./upload');
-// con.connect((err) => {
-//     if(err) throw err
-// })
+const subscriptions = require('./subscription');
 
 const router = express.Router()
 
@@ -20,6 +18,42 @@ router.get('/', (req, res) => {
     console.log('Hello, This is root route');
     // res.sendStatus(200)
     res.end()
+})
+
+router.get('/test-time', (req,res) => {
+    let currentDate = new Date();
+    let beforeLunch = new Date().setHours(10,50,0);
+    let afterLunch = new Date().setHours(10,52,0);
+    if(currentDate > beforeLunch && currentDate < afterLunch){
+        res.send({ is: "yes", time: currentDate});
+    }else{
+        res.send('No');
+    }
+});
+
+// router.post('/subscribe', (req, res) => {
+//     const subscription = req.body;
+//     const payload = JSON.stringify({title:'test'});
+//     console.log(subscription);
+//     webpush.sendNotification(subscription, payload).catch( error => {
+//         console.error(error.stack);
+//     });
+// });
+
+router.get('/sendNoti', (req, res) => {
+    const subscription = {
+        endpoint: 'https://fcm.googleapis.com/fcm/send/fZ4OHsmy2oc:APA91bFbRhooxzNVOorbXainLZ31KGoaN47rC-lb5FvcliO82dx7Q7yTYZIj78d7TxoXwcpy8TkOsZRM_jkdnJiHlhcESP3ups9g2y3jwE8yalOikbnF0Z-AkoRwn6kaXuZY2d4LzN8C',
+        expirationTime: null,
+        keys: {
+          p256dh: 'BDA3AerCFx8TGRZqco4BIJgAFRSIm4Nhr2jS-YuYaYHhxsoV9OphlJusuRHfGjO1kwNfM8FKUjK8sLD07A236qU',
+          auth: '8jXgFg1_BP5eAxCNgBiRIA'
+        }
+    };
+    const payload = JSON.stringify({title:'I sent you a push noti'});
+    webpush.sendNotification(subscription, payload).catch( error => {
+        console.error(error.stack);
+    });
+    res.end();
 })
 
 router.get('/getVersion', (req, res) => {
@@ -54,6 +88,7 @@ router.use('/roles', roles);
 router.use('/permissions', permissions);
 router.use('/rolepermissions',rolepermissions);
 router.use('/upload',uploader);
+router.use('/subscriptions', subscriptions);
 
 // router.get('/users', (req, res) => {
 //     User.findAll()
