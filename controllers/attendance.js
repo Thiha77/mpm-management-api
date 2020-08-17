@@ -142,6 +142,85 @@ const searchadvance = (req, res) => {
     })
     .catch(err => res.send(JSON.stringify(err)));
 }
+
+const attendanceDate= (req, res) => {   
+    return Attendance.findAll({
+
+        attributes: [
+               [sequelize.literal('DISTINCT DATE_FORMAT(recordedDateTime,"%Y/%m") '), 'recordedDateTime']
+            // [sequelize.fn(['date_format'], sequelize.col('recordedDateTime'), '%Y/%m'), 'recordedDateTime']
+        ],
+        order: [
+            ['id', 'DESC']
+        ]
+    })
+    .then( (result) =>{
+        res.send(JSON.stringify(result));
+    })
+     .catch(err => res.send(JSON.stringify(err)));
+   
+}
+
+const attendanceAmPm=(req, res) => {
+  
+    let empId = req.params.id;
+    let attDate = req.params.date;
+
+    return Attendance.findAll({
+        attributes: [
+               [sequelize.literal('DATE_FORMAT(recordedDateTime,"%Y/%m/%d") '), 'recordedDateTime'],
+               [sequelize.literal('DATE_FORMAT(recordedDateTime,"%H:%i") '), 'am_pm'],  
+               [sequelize.literal('DATE_FORMAT(recordedDateTime,"%H") '), 'hour'],
+               [sequelize.literal('DATE_FORMAT(recordedDateTime,"%i") '), 'minute'],               
+        ],  
+         where: {
+              employeeId: empId,           
+              where : sequelize.where(sequelize.literal('EXTRACT(YEAR_MONTH from recordedDateTime)'), '=', attDate) 
+        },   
+         order: [
+            [sequelize.literal('DATE(recordedDateTime)')],
+            [sequelize.literal('DATE_FORMAT(recordedDateTime,"%H:%i")')]
+        ]    
+    })
+    .then( (result) =>{
+   
+        let first_date='';
+        let first_arr=[];
+
+
+      result.forEach(function(entry) {
+         
+            first_date=entry.recordedDateTime;
+            first_arr.push({"am_pm":entry.am_pm});
+      });
+
+        res.send(JSON.stringify(result));//JSON.stringify(result)
+    })
+     .catch(err => res.send(JSON.stringify(err)));
+   
+}
+
+const countDay=(req, res) => {
+    let empId = req.params.id;
+    let attDate = req.params.date;
+     
+    return Attendance.findAll({
+        attributes: [
+               [sequelize.literal('DATE_FORMAT(recordedDateTime,"%Y/%m/%d") '), 'rec'],
+               [sequelize.literal('DATE_FORMAT(recordedDateTime,"%d") '), 'day'],
+        ],  
+         where: {
+              employeeId: empId,           
+              where : sequelize.where(sequelize.literal('EXTRACT(YEAR_MONTH from recordedDateTime)'), '=', attDate) 
+        },  
+        group: ['rec'] 
+    })
+    .then( (result) =>{        
+        res.send(JSON.stringify(result));
+    })
+     .catch(err => res.send(JSON.stringify(err)));
+}
+
 module.exports = {
-    all, byId, save, update, destory, search, searchadvance
+    all, byId, save, update, destory, search, searchadvance,attendanceDate,attendanceAmPm,countDay
 }
